@@ -1,4 +1,4 @@
-package br.com.yasmimsilva.todolist.user;
+package br.com.yasmimsilva.todolist.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -8,26 +8,28 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
+import br.com.yasmimsilva.todolist.Repository.UserRepository;
+import br.com.yasmimsilva.todolist.domain.User;
+import lombok.RequiredArgsConstructor;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/users")
 public class UserController {
 
-    @Autowired
-    private IUserRepository userRepository;
+    private final UserRepository userRepository;
 
-    @PostMapping("/")
-    public ResponseEntity create(@RequestBody UserModel userModel) {
-        var user = this.userRepository.findByUsername(userModel.getUsername());
+    @PostMapping
+    public ResponseEntity create(@RequestBody User user) {
 
-        if (user != null) {
+        if (this.userRepository.findByUsername(user.getUsername()) != null) {
             return ResponseEntity.status(400).body("Usuário já existe");
         }
 
-        var passHashred = BCrypt.withDefaults().hashToString(12, userModel.getPassword().toCharArray());
-        userModel.setPassword(passHashred);
+        String passHashred = BCrypt.withDefaults().hashToString(12, user.getPassword().toCharArray());
+        user.setPassword(passHashred);
 
-        var userCreated = this.userRepository.save(userModel);
+        User userCreated = this.userRepository.save(user);
         return ResponseEntity.status(200).body(userCreated);
 
     }

@@ -1,4 +1,4 @@
-package br.com.yasmimsilva.todolist.erros;
+package br.com.yasmimsilva.todolist.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
 public class ExceptionHandlerController {
-    
+
     @ExceptionHandler(HttpMessageNotReadableException.class)
-    public ResponseEntity<String> handleHttpMessageNoReadbleExceptin(HttpMessageNotReadableException e){
+    public ResponseEntity<String> handleHttpMessageNoReadbleExceptin(HttpMessageNotReadableException e) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMostSpecificCause().getMessage());
     }
 }
