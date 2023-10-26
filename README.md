@@ -12,24 +12,14 @@
 
 
 ## :computer: Endpoints
-<p>
-  Cadastrar usuários -> POST
+- POST /useres - Cadastrar usuários -> HTTPStatus 201
+  
+    * Tarefas na rota tasks precisam da autenticação *username* e *senha*.
 
-    http://localhost:8080/users/
+- POST /tasks - Cadastrar tarefas -> HTTPStatus 201
+- GET /tasks - Listar tarefas -> HTTPStatus 200
+- PUT /tasks/{idTask} - Alterar tarefa -> HTTPStatus 204
 
-Cadastrar Tarefas -> POST
-
-    http://localhost:8080/tasks/
-
-Listar Tarefas -> GET
-
-    http://localhost:8080/tasks/
-
-Alterar Tarefa -> PUT
-
-    http://localhost:8080/tasks/{idTask}
-</p>
-* Tarefas na rota tasks precisam da autenticação *username* e *senha*.
 
 
 ## :technologist: Contribuidores
